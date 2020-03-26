@@ -8,32 +8,7 @@ public class Game24 {
     class TOperData {
         public int operType = -1;
         public double data = 0;
-
-        @Override
-        public String toString() {
-            if (this.operType == -1) {
-                return "";
-            } else {
-                return "t:" + change(this.operType) + "," + "d:" + this.data;
-            }
-        }
     }
-
-    String change(int n) {
-        if (n == 43) {
-            return "+";
-        } else if (n == 45) {
-            return "-";
-        } else if (n == 42) {
-            return "-";
-        } else if (n == 47) {
-            return "-";
-        } else {
-            return "错误";
-        }
-    }
-
-    ;
 
     // 检查计算的参数是否合法，也可以用于过滤一些重复的表达式
     private boolean checkjisuan(double a, double b, int op) {
@@ -231,7 +206,6 @@ public class Game24 {
                         oper[1] = operAll[nn];
                         for (int nnn = 0; nnn < 4; nnn++) {
                             oper[2] = operAll[nnn];
-                            System.out.println("========" + change(oper[0]) + change(oper[1]) + change(oper[2]));
                             int j = 0;
                             int k = 0;
                             for (int i = 0; i < 7; i++) {
@@ -243,11 +217,10 @@ public class Game24 {
                                     computeData[i].operType = oper[k++];
                                 }
                             }
-                            System.out.println(Arrays.toString(computeData));
                             if (!checkOp(computeData))
                                 continue;
                             double r = process(computeData);
-                            System.out.println("算出结果：" + r);
+//                            System.out.println("算出结果：" + r);
                             if (r - 24 > -1e-3 && r - 24 < 1e-3) {
                                 result.add(posttomid(computeData));
                                 if (!bAll)
@@ -263,7 +236,8 @@ public class Game24 {
 
     public static void main(String[] args) {
         long l = System.currentTimeMillis();
-        int[] data = new int[]{5, 5, 5, 4};
+//        int[] data = new int[]{2, 3, 1, 5};
+        int[] data = new int[]{10, 8, 1, 14};
         Game24 g = new Game24();
         Set s = g.start(data, true);
         long r = System.currentTimeMillis();

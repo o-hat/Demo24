@@ -158,9 +158,9 @@ public class StringToBigDecimal {
      */
     public static double doMath(String str) throws Exception {
         ArrayList<String> stringList = getStringList(str);
-        System.out.println("字符串list：" + stringList.toString());
+//        System.out.println("字符串list：" + stringList.toString());
         ArrayList<String> back = middleToBack(stringList);
-        System.out.println("后缀表达式的值为：" + back.toString());
+//        System.out.println("后缀表达式的值为：" + back.toString());
         return calStringValue(back);
     }
 
