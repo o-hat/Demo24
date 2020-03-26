@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class GameTen {
 
-    // 相同的记得排除
     public static void doTest(ArrayList<Object> arr) throws Exception {
         if (arr.size() > 1) {
             for (int i = 0; i < arr.size() - 1; i++) {
@@ -21,33 +20,38 @@ public class GameTen {
         } else {
 //            System.out.println("最终结果:" + arr.toString());
             // 递归去算每一个式子
-            double total = cal(arr);
-
-
+            dgArrayList(arr);
         }
 
     }
 
-    private static void dgArrayList(ArrayList<Object> arr) {
-        arr.forEach(o -> {
-            try {
-                cal(o);
-            } catch (Exception e) {
-                e.printStackTrace();
+    private static void dgArrayList(ArrayList<Object> arr) throws Exception {
+        for (Object o : arr) {
+            if (o instanceof ArrayList) {
+                dgArrayList((ArrayList<Object>) o);
+            } else if (o instanceof String) {
+                double total = StringToBigDecimal.doMath((String) o);
+                if (total == 24) {
+                    System.out.println(o + " =24");
+                    break;
+                }
+            } else {
+                System.out.println("最后递归计算错误，子节点类型错误：" + o);
             }
-        });
-    }
-
-
-    private static double cal(Object o) throws Exception {
-        if (o instanceof ArrayList) {
-            dgArrayList((ArrayList<Object>) o);
-        } else if (o instanceof String) {
-            return StringToBigDecimal.doMath((String) o);
-        } else {
-            System.out.println("最后递归计算错误，子节点类型错误：" + o);
         }
     }
+
+
+//    private static double cal(Object o) throws Exception {
+//        if (o instanceof ArrayList) {
+//            dgArrayList((ArrayList<Object>) o);
+//        } else if (o instanceof String) {
+//            return StringToBigDecimal.doMath((String) o);
+//        } else {
+//            System.out.println("最后递归计算错误，子节点类型错误：" + o);
+//        }
+//        return 0;
+//    }
 
 
     public static ArrayList<Object> returnTwoStr(Object a, Object b) throws Exception {
@@ -90,7 +94,7 @@ public class GameTen {
 
     public static void main(String[] args) throws Exception {
         ArrayList<Object> arr = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 4; i++) {
             arr.add(new Random().nextInt(15));
         }
         System.out.println(arr.toString());

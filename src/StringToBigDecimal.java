@@ -54,14 +54,15 @@ public class StringToBigDecimal {
 
     /**
      * 比较运算符的优先级
-     * 左边是不是比右边大
+     * 返回 左边是不是一定比右边大
      * !!!优先级的问题 '+' 号碰到了 '(' 该返回什么。。。
      *
      * @return
      */
     public static boolean compareOpts(char left, char right) {
-        if (left == '*' || left == '/')
-            return true;
+        if (left == '*' || left == '/') {
+            return right != '*' && left != '/';
+        }
         if (left == '+' || left == '-') {
             return right == '(';
         }
@@ -153,21 +154,22 @@ public class StringToBigDecimal {
      */
     public static double doMath(String str) throws Exception {
         ArrayList<String> stringList = getStringList(str);
-//        System.out.println("字符串list：" + stringList.toString());
+        System.out.println("字符串list：" + stringList.toString());
         ArrayList<String> back = middleToBack(stringList);
-//        System.out.println("后缀表达式的值为：" + back.toString());
+        System.out.println("后缀表达式的值为：" + back.toString());
         return calStringValue(back);
     }
 
-//    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 //        String s = "12 * (3 + 4) - 6 + 8 / 2";
+        String s = "8/5/(8+7)";
 //        ArrayList<String> stringList = getStringList(s);
 //        System.out.println(stringList);
 //        ArrayList<String> back = middleToBack(stringList);
 //        ArrayList<String> demo = new ArrayList<>(Arrays.asList("1", "11", "+", "7", "+", "14", "+"));
 //        double a = calStringValue(demo);
 //        System.out.println(a);
-//        double a = doMath(s);
-//        System.out.println(a);
-//    }
+        double a = doMath(s);
+        System.out.println(a);
+    }
 }
