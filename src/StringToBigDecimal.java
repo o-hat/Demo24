@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 
@@ -61,7 +62,10 @@ public class StringToBigDecimal {
      */
     public static boolean compareOpts(char left, char right) {
         if (left == '*' || left == '/') {
-            return right != '*' && left != '/';
+            if (right == '*' || right == '/') {
+                return false;
+            }
+            return true;
         }
         if (left == '+' || left == '-') {
             return right == '(';
@@ -121,7 +125,7 @@ public class StringToBigDecimal {
             } else if ("(".equals(c)) {
                 stack.push(c);
             } else if (")".equals(c)) {
-                while (!"(".equals(stack.peek())) {
+                while (!stack.isEmpty() && !"(".equals(stack.peek())) {
                     res.add(stack.pop());
                 }
                 stack.pop(); // 弹出右括号
@@ -162,11 +166,12 @@ public class StringToBigDecimal {
 
     public static void main(String[] args) throws Exception {
 //        String s = "12 * (3 + 4) - 6 + 8 / 2";
-        String s = "8/5/(8+7)";
+        String s = "((5+5)+12/14)";
+//        String s = "8/5/(8+7)";
 //        ArrayList<String> stringList = getStringList(s);
 //        System.out.println(stringList);
 //        ArrayList<String> back = middleToBack(stringList);
-//        ArrayList<String> demo = new ArrayList<>(Arrays.asList("1", "11", "+", "7", "+", "14", "+"));
+//        ArrayList<String> demo = new ArrayList<String>(Arrays.asList("1", "11", "+", "7", "+", "14", "+"));
 //        double a = calStringValue(demo);
 //        System.out.println(a);
         double a = doMath(s);
