@@ -4,10 +4,13 @@ import java.util.Random;
 
 public class GameTen {
 
+    public static boolean loop = true; // 只计算一个答案
+
     public static void doTest(ArrayList<Object> arr) throws Exception {
         if (arr.size() > 1) {
             for (int i = 0; i < arr.size() - 1; i++) {
-                for (int j = i + 1; j < arr.size(); j++) {
+                int j = i + 1;
+                while (loop && j < arr.size()) {
                     ArrayList<Object> copyData = (ArrayList<Object>) arr.clone();
                     copyData.remove(arr.get(i));
                     copyData.remove(arr.get(j));
@@ -15,6 +18,7 @@ public class GameTen {
                     copyData.add(returnTwoStr(arr.get(i), arr.get(j)));
 //                    System.out.println(copyData);
                     doTest(copyData);
+                    j += 1;
                 }
             }
         } else {
@@ -26,32 +30,23 @@ public class GameTen {
     }
 
     private static void dgArrayList(ArrayList<Object> arr) throws Exception {
-        for (Object o : arr) {
+        int i = 0;
+        while (loop && i < arr.size()) {
+            Object o = arr.get(i);
             if (o instanceof ArrayList) {
                 dgArrayList((ArrayList<Object>) o);
             } else if (o instanceof String) {
                 double total = StringToBigDecimal.doMath((String) o);
                 if (total == 24) {
                     System.out.println(o + " =24");
-                    break;
+                    loop = false;
                 }
             } else {
                 System.out.println("最后递归计算错误，子节点类型错误：" + o);
             }
+            i += 1;
         }
     }
-
-
-//    private static double cal(Object o) throws Exception {
-//        if (o instanceof ArrayList) {
-//            dgArrayList((ArrayList<Object>) o);
-//        } else if (o instanceof String) {
-//            return StringToBigDecimal.doMath((String) o);
-//        } else {
-//            System.out.println("最后递归计算错误，子节点类型错误：" + o);
-//        }
-//        return 0;
-//    }
 
 
     public static ArrayList<Object> returnTwoStr(Object a, Object b) throws Exception {
@@ -94,7 +89,7 @@ public class GameTen {
 
     public static void main(String[] args) throws Exception {
         ArrayList<Object> arr = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             arr.add(new Random().nextInt(15));
         }
         System.out.println(arr.toString());
